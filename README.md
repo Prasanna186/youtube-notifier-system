@@ -15,7 +15,6 @@ Database & Auth: Firebase Firestore & Firebase Authentication
 APIs: YouTube Data API v3
 Notifications: Nodemailer (Email)
 🛠️ Local Setup
-Clone the repo: git clone https://github.com/your-username/TubeSum-AI.git
 Install dependencies: npm install
 Configure Environment: Create a .env file with your GEMINI_API_KEY, EMAIL_USER, and EMAIL_PASS.
 Run the app: npm run dev
