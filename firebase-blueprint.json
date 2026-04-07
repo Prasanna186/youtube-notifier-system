@@ -1,0 +1,58 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "isMonitoring": { "type": "boolean" },
+        "lastChecked": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "YouTube channel subscription",
+      "type": "object",
+      "properties": {
+        "channelId": { "type": "string" },
+        "channelTitle": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "lastVideoId": { "type": "string" }
+      },
+      "required": ["channelId", "channelTitle"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Sent notification record",
+      "type": "object",
+      "properties": {
+        "videoId": { "type": "string" },
+        "videoTitle": { "type": "string" },
+        "channelName": { "type": "string" },
+        "summary": { "type": "string" },
+        "videoUrl": { "type": "string" },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "sentAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["videoId", "sentAt", "videoUrl", "publishedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile"
+    },
+    "/users/{userId}/subscriptions/{channelId}": {
+      "schema": "Subscription",
+      "description": "Subscribed channels for a user"
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "Notification history for a user"
+    }
+  }
+}

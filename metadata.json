@@ -1,0 +1,5 @@
+{
+  "name": "YouTube Notifier System",
+  "description": "An agentic AI system that monitors YouTube channels, summarizes new videos using Gemini, and notifies users via Email and WhatsApp.",
+  "requestFramePermissions": []
+}

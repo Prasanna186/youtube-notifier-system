@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email']) &&
+             data.uid is string &&
+             data.email is string &&
+             (!('settings' in data) || (
+               data.settings.emailNotifications is bool &&
+               data.settings.summaryLength in ['short', 'medium', 'long']
+             ));
+    }
+
+    function isValidNotification(data) {
+      return data.keys().hasAll(['videoId', 'videoTitle', 'channelName', 'summary', 'videoUrl', 'publishedAt', 'sentAt']) &&
+             data.videoId is string && data.videoId.size() < 100 &&
+             data.videoTitle is string && data.videoTitle.size() < 300 &&
+             data.channelName is string && data.channelName.size() < 150 &&
+             data.summary is string && data.summary.size() < 10000 &&
+             data.videoUrl is string && data.videoUrl.size() < 1000 &&
+             data.publishedAt is string &&
+             data.sentAt is timestamp;
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isAuthenticated() && request.auth.uid == userId && isValidUser(request.resource.data);
+      allow update: if isOwner(userId) && request.resource.data.uid == resource.data.uid;
+
+      match /subscriptions/{channelId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      match /notifications/{notificationId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidNotification(request.resource.data);
+        allow update: if false; 
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}
