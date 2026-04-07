@@ -14,14 +14,24 @@ Real-time Alerts: A dedicated alerts center to manage and view all your recent v
 Secure Authentication: Seamless Google Login integration via Firebase for a personalized and secure experience.
 
 🛠️ Tech Stack
+
 Frontend: React 19, Vite, Tailwind CSS, Framer Motion (for smooth animations)
+
 Backend: Node.js, Express
+
 AI: Google Gemini API (@google/genai)
+
 Database & Auth: Firebase Firestore & Firebase Authentication
+
 APIs: YouTube Data API v3
+
 Notifications: Nodemailer (Email)
+
 🛠️ Local Setup
+
 Install dependencies: npm install
+
 Configure Environment: Create a .env file with your GEMINI_API_KEY, EMAIL_USER, and EMAIL_PASS.
+
 Run the app: npm run dev
 
